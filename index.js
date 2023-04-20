@@ -42,8 +42,7 @@ app.use((req, res, next) => {
           console.log(result)
           res.status(200).send({
             "idlogin": result[0].idlogin,
-            "user": result[0].user,
-            // "password": result[0].password
+            "user": result[0].user
           })
         }else{
           res.status(400).send('Usuario no existe')
@@ -120,5 +119,17 @@ app.put('/actualizar/:id', (req,res) =>{
     })
 })
 
+
+app.delete('/eliminar/:id', (req,res)=>{
+
+    const idsolicitud =req.params.id
+    const sql = `DELETE FROM solicitud where idsolicitud = ${idsolicitud}`
+
+    conectBD.query(sql,err =>{
+      if(err) throw err
+
+      res.send('solicitud eliminada con éxito')
+    })
+})
 
 app.listen(3001, console.log('Server running in port 3001'))
